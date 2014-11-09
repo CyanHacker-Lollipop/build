@@ -1,4 +1,4 @@
-# Copyright (C) 2014 The SaberMod Project
+# Copyright (C) 2014-2015 The SaberMod Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,17 +13,57 @@
 # limitations under the License.
 #
 
-GRAPHITE_FLAGS := -fgraphite,-floop-flatten,-floop-parallelize-all,-ftree-loop-linear,-floop-interchange,-floop-strip-mine,-floop-block
+GRAPHITE_FLAGS := \
+	-fgraphite \
+	-fgraphite-identity \
+	-floop-flatten \
+	-floop-parallelize-all \
+	-ftree-loop-linear \
+	-floop-interchange \
+	-floop-strip-mine \
+	-floop-block \
+	-Wno-error=maybe-uninitialized
 
-ifdef LOCAL_CFLAGS
-LOCAL_CFLAGS += $(call cc-option,$(GRAPHITE_FLAGS))
-else
-LOCAL_CFLAGS := $(call cc-option,$(GRAPHITE_FLAGS))
-endif
+# Force disable some modules that are not compatible with graphite flags
+  LOCAL_DISABLE_GRAPHITE := \
+    libunwind \
+    libFFTEm \
+    libicui18n \
+    libskia \
+    libvpx \
+    libmedia_jni \
+    libstagefright_mp3dec \
+    libart \
+    mdnsd \
+    libwebrtc_spl \
+    third_party_WebKit_Source_core_webcore_svg_gyp \
+    libjni_filtershow_filters \
+    libavformat \
+    libavcodec \
+    skia_skia_library_gyp \
+    libSR_Core \
+    libwebviewchromium \
+    third_party_libvpx_libvpx_gyp \
+    ui_gl_gl_gyp \
+	fio
 
-ifdef LOCAL_CPPFLAGS
-LOCAL_CFLAGS += $(call cpp-option,$(GRAPHITE_FLAGS))
-else
-LOCAL_CPPFLAGS := $(call cpp-option,$(GRAPHITE_FLAGS))
+ifneq (1,$(words $(filter $(LOCAL_DISABLE_GRAPHITE),$(LOCAL_MODULE))))
+  ifdef LOCAL_CONLYFLAGS
+    LOCAL_CONLYFLAGS += $(GRAPHITE_FLAGS)
+  else
+    LOCAL_CONLYFLAGS := $(GRAPHITE_FLAGS)
+  endif
+
+  ifdef LOCAL_CPPFLAGS
+    LOCAL_CPPFLAGS += $(GRAPHITE_FLAGS)
+  else
+    LOCAL_CPPFLAGS := $(GRAPHITE_FLAGS)
+  endif
+
+  ifndef LOCAL_LDFLAGS
+    LOCAL_LDFLAGS  := $(GRAPHITE_FLAGS)
+  else
+    LOCAL_LDFLAGS  += $(GRAPHITE_FLAGS)
+  endif
 endif
-####
+#####
