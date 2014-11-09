@@ -1,4 +1,4 @@
-# Copyright (C) 2014-2015 The SaberMod Project
+# Copyright (C) 2015 The SaberMod Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,23 +13,30 @@
 # limitations under the License.
 #
 
-ifneq (1,$(words $(filter $(LOCAL_DISABLE_GRAPHITE),$(LOCAL_MODULE))))
-  ifdef LOCAL_CONLYFLAGS
-    LOCAL_CONLYFLAGS += $(GRAPHITE_FLAGS)
-  else
-    LOCAL_CONLYFLAGS := $(GRAPHITE_FLAGS)
-  endif
+ifneq (1,$(words $(filter $(LOCAL_DISABLE_STRICT), $(LOCAL_MODULE))))
+ifndef LOCAL_CONLYFLAGS
+LOCAL_CONLYFLAGS += $(STRICT_FLAGS)
+else
+LOCAL_CONLYFLAGS := $(STRICT_FLAGS)
+endif
 
-  ifdef LOCAL_CPPFLAGS
-    LOCAL_CPPFLAGS += $(GRAPHITE_FLAGS)
-  else
-    LOCAL_CPPFLAGS := $(GRAPHITE_FLAGS)
-  endif
-
-  ifndef LOCAL_LDFLAGS
-    LOCAL_LDFLAGS  := $(GRAPHITE_FLAGS)
-  else
-    LOCAL_LDFLAGS  += $(GRAPHITE_FLAGS)
-  endif
+ifdef LOCAL_CPPFLAGS
+LOCAL_CPPFLAGS += $(STRICT_FLAGS)
+else
+LOCAL_CPPFLAGS := $(STRICT_FLAGS)
+endif
+ifndef LOCAL_CLANG
+LOCAL_CONLYFLAGS += \
+	-Wstrict-aliasing=3
+LOCAL_CPPFLAGS += \
+	-Wstrict-aliasing=3
+else
+LOCAL_CONLYFLAGS += \
+	-Wstrict-aliasing=2
+LOCAL_CPPFLAGS += \
+	-Wstrict-aliasing=2
+endif
 endif
 #####
+
+
