@@ -97,8 +97,64 @@ else
   endif
 endif
 
-ifeq ($(HACKIFY),true)
-include $(BUILD_SYSTEM)/graphite.mk
+ifneq ($(strip $(HACKIFY)),false)
+# Copyright (C) 2014-2015 The SaberMod Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# Include custom gcc flags.  Seperate them so they can be easily managed.
+
+# arm thumb, not used on the host compiler.
+ifneq ($(strip $(LOCAL_IS_HOST_MODULE)),true)
+    include $(BUILD_SYSTEM)/thumb_interwork.mk
+  endif
+
+# O3
+include $(BUILD_SYSTEM)/O3.mk
+
+# posix thread (pthread) support
+ifeq ($(strip $(ENABLE_PTHREAD)),true)
+  include $(BUILD_SYSTEM)/pthread.mk
+endif
+
+# Do not use graphite on the clang compiler.
+ifneq ($(strip $(LOCAL_IS_HOST_MODULE)),true)
+  ifneq ($(strip $(LOCAL_CLANG)),true)
+  
+    # If it gets this far enable graphite by default from here on out.
+    include $(BUILD_SYSTEM)/graphite.mk
+  endif
+endif
+
+# Have anything that builds with libtinycompress as a shared lib use kernel headers.
+
+ifdef LOCAL_SHARED_LIBRARIES
+  ifeq (1,$(words $(filter libtinycompress, $(LOCAL_SHARED_LIBRARIES))))
+    ifdef LOCAL_C_INCLUDES
+      LOCAL_C_INCLUDES += $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/include
+    else
+      LOCAL_C_INCLUDES := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/include
+    endif
+    ifdef LOCAL_ADDITIONAL_DEPENDENCIES
+      LOCAL_ADDITIONAL_DEPENDENCIES += $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
+    else
+      LOCAL_ADDITIONAL_DEPENDENCIES := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
+    endif
+  endif
+endif
+
+#end SaberMod
 endif
 
 # The following LOCAL_ variables will be modified in this file.
