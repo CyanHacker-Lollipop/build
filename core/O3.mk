@@ -13,23 +13,16 @@
 # limitations under the License.
 #
 
-ifneq (1,$(words $(filter $(LOCAL_DISABLE_GRAPHITE),$(LOCAL_MODULE))))
+ifneq (1,$(words $(filter $(LOCAL_DISABLE_O3),$(LOCAL_MODULE))))
   ifdef LOCAL_CONLYFLAGS
-    LOCAL_CONLYFLAGS += $(GRAPHITE_FLAGS)
-  else
-    LOCAL_CONLYFLAGS := $(GRAPHITE_FLAGS)
-  endif
+    LOCAL_CONLYFLAGS += $(O3_FLAGS)
+  else	
+    LOCAL_CONLYFLAGS := $(O3_FLAGS)
+endif
 
-  ifdef LOCAL_CPPFLAGS
-    LOCAL_CPPFLAGS += $(GRAPHITE_FLAGS)
+ifdef LOCAL_CPPFLAGS
+    LOCAL_CPPFLAGS += $(O3_FLAGS)
   else
-    LOCAL_CPPFLAGS := $(GRAPHITE_FLAGS)
-  endif
-
-  ifndef LOCAL_LDFLAGS
-    LOCAL_LDFLAGS  := $(GRAPHITE_FLAGS)
-  else
-    LOCAL_LDFLAGS  += $(GRAPHITE_FLAGS)
+    LOCAL_CPPFLAGS := $(O3_FLAGS)
   endif
 endif
-#####
