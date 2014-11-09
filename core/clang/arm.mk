@@ -23,7 +23,7 @@ CLANG_CONFIG_arm_UNKNOWN_CFLAGS := \
   -fno-strict-volatile-bitfields \
   -fno-align-jumps \
   -Wa,--noexecstack
-
+  
 define subst-clang-incompatible-arm-flags
   $(subst -march=armv5te,-march=armv5t,\
   $(subst -march=armv5e,-march=armv5,\
