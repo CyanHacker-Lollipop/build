@@ -15,7 +15,8 @@ CLANG_CONFIG_x86_LINUX_HOST_EXTRA_CFLAGS := \
   -no-integrated-as
 
 ifneq ($(strip $($(clang_2nd_arch_prefix)HOST_IS_64_BIT)),)
-ifeq ($(HACKIFY),true)
+
+ifeq ($(HACKIFY),false)
 CLANG_CONFIG_x86_LINUX_HOST_EXTRA_CPPFLAGS := \
   --gcc-toolchain=$($(clang_2nd_arch_prefix)HOST_TOOLCHAIN_FOR_CLANG) \
   --sysroot=$($(clang_2nd_arch_prefix)HOST_TOOLCHAIN_FOR_CLANG)/sysroot \
@@ -33,7 +34,7 @@ CLANG_CONFIG_x86_LINUX_HOST_EXTRA_CPPFLAGS := \
   -no-integrated-as
 endif
 
-ifeq ($(HACKIFY),true)
+ifneq ($(HACKIFY),false)
 CLANG_CONFIG_x86_LINUX_HOST_EXTRA_LDFLAGS := \
   --gcc-toolchain=$($(clang_2nd_arch_prefix)HOST_TOOLCHAIN_FOR_CLANG) \
   --sysroot=$($(clang_2nd_arch_prefix)HOST_TOOLCHAIN_FOR_CLANG)/sysroot \
@@ -53,7 +54,8 @@ CLANG_CONFIG_x86_LINUX_HOST_EXTRA_LDFLAGS := \
   -no-integrated-as
 endif
 else
-ifeq ($(HACKIFY),true)
+ifneq ($(HACKIFY),false)
+
 CLANG_CONFIG_x86_LINUX_HOST_EXTRA_CPPFLAGS := \
   --gcc-toolchain=$($(clang_2nd_arch_prefix)HOST_TOOLCHAIN_FOR_CLANG) \
   --sysroot=$($(clang_2nd_arch_prefix)HOST_TOOLCHAIN_FOR_CLANG)/sysroot \
@@ -71,7 +73,7 @@ CLANG_CONFIG_x86_LINUX_HOST_EXTRA_CPPFLAGS := \
   -no-integrated-as
 endif
 
-ifeq ($(HACKIFY),true)
+ifeq ($(HACKIFY),false)
 CLANG_CONFIG_x86_LINUX_HOST_EXTRA_LDFLAGS := \
   --gcc-toolchain=$($(clang_2nd_arch_prefix)HOST_TOOLCHAIN_FOR_CLANG) \
   --sysroot=$($(clang_2nd_arch_prefix)HOST_TOOLCHAIN_FOR_CLANG)/sysroot \
