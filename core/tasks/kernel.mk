@@ -72,7 +72,6 @@ ifeq ($(KERNEL_ARCH),arm64)
   endif
 endif
 
-
 ## Do be discontinued in a future version. Notify builder about target
 ## kernel format requirement
 ifeq ($(BOARD_KERNEL_IMAGE_NAME),)
@@ -143,19 +142,38 @@ KERNEL_HEADERS_INSTALL := $(KERNEL_OUT)/usr
 KERNEL_MODULES_INSTALL := system
 KERNEL_MODULES_OUT := $(TARGET_OUT)/lib/modules
 
-ifeq ($(KERNEL_TOOLCHAIN),)
-KERNEL_TOOLCHAIN := $(ARM_EABI_TOOLCHAIN)
-endif
+TARGET_KERNEL_CROSS_COMPILE_PREFIX := $(strip $(TARGET_KERNEL_CROSS_COMPILE_PREFIX))
+ifeq ($(TARGET_KERNEL_CROSS_COMPILE_PREFIX),)
 ifeq ($(KERNEL_TOOLCHAIN_PREFIX),)
 KERNEL_TOOLCHAIN_PREFIX := bin/arm-eabi-
 endif
+else
+KERNEL_TOOLCHAIN_PREFIX := $(TARGET_KERNEL_CROSS_COMPILE_PREFIX)
+endif
+
+ifeq ($(KERNEL_TOOLCHAIN),)
+KERNEL_TOOLCHAIN_PATH := $(KERNEL_TOOLCHAIN_PREFIX)
+else
+ifneq ($(KERNEL_TOOLCHAIN_PREFIX),)
+KERNEL_TOOLCHAIN_PATH := $(KERNEL_TOOLCHAIN)/$(KERNEL_TOOLCHAIN_PREFIX)
+endif
+endif
+
+ifneq ($(USE_CCACHE),)
+    ccache := $(ANDROID_BUILD_TOP)/prebuilts/misc/$(HOST_PREBUILT_TAG)/ccache/ccache
+    # Check that the executable is here.
+    ccache := $(strip $(wildcard $(ccache)))
+endif
+
+KERNEL_CROSS_COMPILE := CROSS_COMPILE="$(ccache) $(KERNEL_TOOLCHAIN_PATH)"
+ccache =
 
 define mv-modules
     mdpath=`find $(KERNEL_MODULES_OUT) -type f -name modules.order`;\
     if [ "$$mdpath" != "" ];then\
         mpath=`dirname $$mdpath`;\
         ko=`find $$mpath/kernel -type f -name *.ko`;\
-        for i in $$ko; do $(KERNEL_TOOLCHAIN)/$(KERNEL_TOOLCHAIN_PREFIX)strip --strip-unneeded $$i;\
+        for i in $$ko; do $(KERNEL_TOOLCHAIN_PATH)strip --strip-unneeded $$i;\
         mv $$i $(KERNEL_MODULES_OUT)/; done;\
     fi
 endef
