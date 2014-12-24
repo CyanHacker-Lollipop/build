@@ -57,6 +57,7 @@ else
   else
     TARGET_PREBUILT_INT_KERNEL_TYPE := zImage
   endif
+<<<<<<< HEAD
 endif
 
 TARGET_PREBUILT_INT_KERNEL := $(KERNEL_OUT)/arch/$(KERNEL_ARCH)/boot/$(TARGET_PREBUILT_INT_KERNEL_TYPE)
@@ -72,6 +73,23 @@ ifeq ($(KERNEL_ARCH),arm64)
   endif
 endif
 
+=======
+endif
+
+TARGET_PREBUILT_INT_KERNEL := $(KERNEL_OUT)/arch/$(KERNEL_ARCH)/boot/$(TARGET_PREBUILT_INT_KERNEL_TYPE)
+
+# Clear this first to prevent accidental poisoning from env
+MAKE_FLAGS :=
+
+ifeq ($(KERNEL_ARCH),arm64)
+  # Avoid "unsupported RELA relocation: 311" errors (R_AARCH64_ADR_GOT_PAGE)
+  MAKE_FLAGS += CFLAGS_MODULE="-fno-pic"
+  ifeq ($(TARGET_ARCH),arm)
+    KERNEL_CONFIG_OVERRIDE := CONFIG_ANDROID_BINDER_IPC_32BIT=y
+  endif
+endif
+
+>>>>>>> e372eda... core: More flexible kernel configuration
 
 ## Do be discontinued in a future version. Notify builder about target
 ## kernel format requirement
@@ -143,11 +161,10 @@ KERNEL_HEADERS_INSTALL := $(KERNEL_OUT)/usr
 KERNEL_MODULES_INSTALL := system
 KERNEL_MODULES_OUT := $(TARGET_OUT)/lib/modules
 
-<<<<<<< HEAD
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := $(strip $(TARGET_KERNEL_CROSS_COMPILE_PREFIX))
 ifeq ($(TARGET_KERNEL_CROSS_COMPILE_PREFIX),)
 ifeq ($(KERNEL_TOOLCHAIN_PREFIX),)
-KERNEL_TOOLCHAIN_PREFIX := arm-eabi-
+KERNEL_TOOLCHAIN_PREFIX := bin/arm-eabi-
 endif
 else
 KERNEL_TOOLCHAIN_PREFIX := $(TARGET_KERNEL_CROSS_COMPILE_PREFIX)
@@ -170,25 +187,12 @@ endif
 KERNEL_CROSS_COMPILE := CROSS_COMPILE="$(ccache) $(KERNEL_TOOLCHAIN_PATH)"
 ccache =
 
-=======
-ifeq ($(KERNEL_TOOLCHAIN),)
-KERNEL_TOOLCHAIN := $(ARM_EABI_TOOLCHAIN)
-endif
-ifeq ($(KERNEL_TOOLCHAIN_PREFIX),)
-KERNEL_TOOLCHAIN_PREFIX := arm-eabi-
-endif
-
->>>>>>> 2368def... Allow specifying kernel toolchain and prefix
 define mv-modules
     mdpath=`find $(KERNEL_MODULES_OUT) -type f -name modules.order`;\
     if [ "$$mdpath" != "" ];then\
         mpath=`dirname $$mdpath`;\
         ko=`find $$mpath/kernel -type f -name *.ko`;\
-<<<<<<< HEAD
         for i in $$ko; do $(KERNEL_TOOLCHAIN_PATH)strip --strip-unneeded $$i;\
-=======
-        for i in $$ko; do $(KERNEL_TOOLCHAIN)/$(KERNEL_TOOLCHAIN_PREFIX)strip --strip-unneeded $$i;\
->>>>>>> 2368def... Allow specifying kernel toolchain and prefix
         mv $$i $(KERNEL_MODULES_OUT)/; done;\
     fi
 endef
@@ -200,19 +204,6 @@ define clean-module-folder
     fi
 endef
 
-<<<<<<< HEAD
-=======
-ifeq ($(TARGET_ARCH),arm)
-    ifneq ($(USE_CCACHE),)
-      ccache := $(ANDROID_BUILD_TOP)/prebuilts/misc/$(HOST_PREBUILT_TAG)/ccache/ccache
-      # Check that the executable is here.
-      ccache := $(strip $(wildcard $(ccache)))
-    endif
-    ARM_CROSS_COMPILE:=CROSS_COMPILE="$(ccache) $(KERNEL_TOOLCHAIN)/$(KERNEL_TOOLCHAIN_PREFIX)"
-    ccache = 
-endif
-
->>>>>>> 2368def... Allow specifying kernel toolchain and prefix
 ifeq ($(HOST_OS),darwin)
   MAKE_FLAGS += C_INCLUDE_PATH=$(ANDROID_BUILD_TOP)/external/elfutils/0.153/libelf/
 endif
@@ -248,6 +239,7 @@ $(TARGET_PREBUILT_INT_KERNEL): $(TARGET_KERNEL_MODULES)
 
 $(KERNEL_HEADERS_INSTALL): $(KERNEL_OUT) $(KERNEL_CONFIG)
 	$(hide) if [ ! -z "$(KERNEL_HEADER_DEFCONFIG)" ]; then \
+<<<<<<< HEAD
 			rm -f ../$(KERNEL_CONFIG); \
 			$(MAKE) -C $(KERNEL_SRC) O=$(KERNEL_OUT) ARCH=$(KERNEL_HEADER_ARCH) $(KERNEL_CROSS_COMPILE) VARIANT_DEFCONFIG=$(VARIANT_DEFCONFIG) SELINUX_DEFCONFIG=$(SELINUX_DEFCONFIG) $(KERNEL_HEADER_DEFCONFIG); \
 			$(MAKE) -C $(KERNEL_SRC) O=$(KERNEL_OUT) ARCH=$(KERNEL_HEADER_ARCH) $(KERNEL_CROSS_COMPILE) headers_install; fi
@@ -255,6 +247,15 @@ $(KERNEL_HEADERS_INSTALL): $(KERNEL_OUT) $(KERNEL_CONFIG)
 			echo "Used a different defconfig for header generation"; \
 			rm -f ../$(KERNEL_CONFIG); \
 			$(MAKE) -C $(KERNEL_SRC) O=$(KERNEL_OUT) ARCH=$(KERNEL_ARCH) $(KERNEL_CROSS_COMPILE) VARIANT_DEFCONFIG=$(VARIANT_DEFCONFIG) SELINUX_DEFCONFIG=$(SELINUX_DEFCONFIG) $(KERNEL_DEFCONFIG); fi
+=======
+			$(hide) rm -f ../$(KERNEL_CONFIG); \
+			$(MAKE) -C $(KERNEL_SRC) O=$(KERNEL_OUT) ARCH=$(KERNEL_HEADER_ARCH) $(KERNEL_CROSS_COMPILE) $(KERNEL_HEADER_DEFCONFIG); \
+			$(MAKE) -C $(KERNEL_SRC) O=$(KERNEL_OUT) ARCH=$(KERNEL_HEADER_ARCH) $(KERNEL_CROSS_COMPILE) headers_install; fi
+	$(hide) if [ "$(KERNEL_HEADER_DEFCONFIG)" != "$(KERNEL_DEFCONFIG)" ]; then \
+			echo "Used a different defconfig for header generation"; \
+			$(hide) rm -f ../$(KERNEL_CONFIG); \
+			$(MAKE) -C $(KERNEL_SRC) O=$(KERNEL_OUT) ARCH=$(KERNEL_ARCH) $(KERNEL_CROSS_COMPILE) $(KERNEL_DEFCONFIG); fi
+>>>>>>> e372eda... core: More flexible kernel configuration
 	$(hide) if [ ! -z "$(KERNEL_CONFIG_OVERRIDE)" ]; then \
 			echo "Overriding kernel config with '$(KERNEL_CONFIG_OVERRIDE)'"; \
 			echo $(KERNEL_CONFIG_OVERRIDE) >> $(KERNEL_OUT)/.config; \
