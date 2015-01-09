@@ -51,7 +51,7 @@ except:
     device = product
 
 if not depsonly:
-    print("Device %s not found. Attempting to retrieve device repository from CyanogenMod Github (http://github.com/CyanogenMod)." % device)
+    print("Device %s not found. Attempting to retrieve device repository from CyanHacker Github (http://github.com/CyanHacker)." % device)
 
 repositories = []
 
@@ -70,7 +70,7 @@ def add_auth(githubreq):
         githubreq.add_header("Authorization","Basic %s" % githubauth)
 
 if not depsonly:
-    githubreq = urllib.request.Request("https://api.github.com/search/repositories?q=%s+user:CyanogenMod+in:name+fork:true" % device)
+    githubreq = urllib.request.Request("https://api.github.com/search/repositories?q=%s+user:CyanHacker-Lollipop+in:name+fork:true" % device)
     add_auth(githubreq)
     result = json.loads(urllib.request.urlopen(githubreq).read().decode())
     try:
@@ -79,7 +79,7 @@ if not depsonly:
         print("Failed to search GitHub (offline?)")
         sys.exit()
     if (numresults == 0):
-        print("Could not find device %s on github.com/CyanogenMod" % device)
+        print("Could not find device %s on github.com/CyanHacker" % device)
         sys.exit()
     for res in result['items']:
         repositories.append(res)
@@ -174,12 +174,12 @@ def add_to_manifest(repositories, fallback_branch = None):
         repo_name = repository['repository']
         repo_target = repository['target_path']
         if exists_in_tree(lm, repo_name):
-            print('CyanogenMod/%s already exists' % (repo_name))
+            print('CyanHacker/%s already exists' % (repo_name))
             continue
 
-        print('Adding dependency: CyanogenMod/%s -> %s' % (repo_name, repo_target))
+        print('Adding dependency: CyanHacker/%s -> %s' % (repo_name, repo_target))
         project = ElementTree.Element("project", attrib = { "path": repo_target,
-            "remote": "github", "name": "CyanogenMod/%s" % repo_name })
+            "remote": "github", "name": "CyanHacker/%s" % repo_name })
 
         if 'branch' in repository:
             project.set('revision',repository['branch'])
@@ -210,7 +210,7 @@ def fetch_dependencies(repo_path, fallback_branch = None):
         fetch_list = []
 
         for dependency in dependencies:
-            if not is_in_manifest("CyanogenMod/%s" % dependency['repository']):
+            if not is_in_manifest("CyanHacker/%s" % dependency['repository']):
                 fetch_list.append(dependency)
                 syncable_repos.append(dependency['target_path'])
 
@@ -293,4 +293,4 @@ else:
             print("Done")
             sys.exit()
 
-print("Repository for %s not found in the CyanogenMod Github repository list. If this is in error, you may need to manually add it to your local_manifests/roomservice.xml." % device)
+print("Repository for %s not found in the CyanHacker Github repository list. If this is in error, you may need to manually add it to your local_manifests/roomservice.xml." % device)
