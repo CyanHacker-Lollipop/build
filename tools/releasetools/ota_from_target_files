@@ -593,6 +593,13 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   if HasVendorPartition(input_zip):
     system_progress -= 0.1
 
+  script.Print("****************************************")
+  script.Print("****************************************")
+  script.Print("***************CYANHACKER***************")            
+  script.Print("*******************ROM******************")
+  script.Print("****************************************") 
+  script.Print("****************************************")
+	
   script.AppendExtra("if is_mounted(\"/data\") then")
   script.ValidateSignatures("data")
   script.AppendExtra("else")
@@ -938,7 +945,7 @@ else
     if updating_boot:
       if include_full_boot:
         print "boot image changed; including full."
-        script.Print("Installing boot image...")
+        script.Print("Flashing Boot Image...")
         script.WriteRawImage("/boot", "boot.img")
       else:
         # Produce the boot image by applying a patch to the current
