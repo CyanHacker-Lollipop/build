@@ -1,0 +1,268 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1af78d9a_551de565",
+        "filename": "core/Makefile",
+        "patchSetId": 5
+      },
+      "lineNbr": 1667,
+      "author": {
+        "id": 1003175
+      },
+      "writtenOn": "2015-01-12T07:51:54Z",
+      "side": 1,
+      "message": "CM To CH",
+      "range": {
+        "startLine": 1667,
+        "startChar": 36,
+        "endLine": 1667,
+        "endChar": 38
+      },
+      "revId": "10efe162ec9f54a2104ed6829b6e951dbd4e4dd2",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1af78d9a_351ad96e",
+        "filename": "core/product_config.mk",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1003175
+      },
+      "writtenOn": "2015-01-12T07:51:54Z",
+      "side": 1,
+      "message": "i think we must remove cm traces",
+      "range": {
+        "startLine": 182,
+        "startChar": 4,
+        "endLine": 182,
+        "endChar": 6
+      },
+      "revId": "10efe162ec9f54a2104ed6829b6e951dbd4e4dd2",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1af78d9a_95262db9",
+        "filename": "envsetup.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1003175
+      },
+      "writtenOn": "2015-01-12T07:51:54Z",
+      "side": 1,
+      "message": "CM To CH",
+      "range": {
+        "startLine": 501,
+        "startChar": 13,
+        "endLine": 501,
+        "endChar": 28
+      },
+      "revId": "10efe162ec9f54a2104ed6829b6e951dbd4e4dd2",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1af78d9a_752bc182",
+        "filename": "envsetup.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1003175
+      },
+      "writtenOn": "2015-01-12T07:51:54Z",
+      "side": 1,
+      "message": "CM To CH",
+      "range": {
+        "startLine": 515,
+        "startChar": 13,
+        "endLine": 515,
+        "endChar": 28
+      },
+      "revId": "10efe162ec9f54a2104ed6829b6e951dbd4e4dd2",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1af78d9a_d520b59d",
+        "filename": "envsetup.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1003175
+      },
+      "writtenOn": "2015-01-12T07:51:54Z",
+      "side": 1,
+      "message": "CM to CH",
+      "range": {
+        "startLine": 538,
+        "startChar": 4,
+        "endLine": 538,
+        "endChar": 19
+      },
+      "revId": "10efe162ec9f54a2104ed6829b6e951dbd4e4dd2",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1af78d9a_b52529ad",
+        "filename": "envsetup.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1003175
+      },
+      "writtenOn": "2015-01-12T07:51:54Z",
+      "side": 1,
+      "message": "CM to CH",
+      "range": {
+        "startLine": 561,
+        "startChar": 18,
+        "endLine": 561,
+        "endChar": 21
+      },
+      "revId": "10efe162ec9f54a2104ed6829b6e951dbd4e4dd2",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1af78d9a_f53691e6",
+        "filename": "envsetup.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1003175
+      },
+      "writtenOn": "2015-01-12T07:51:54Z",
+      "side": 1,
+      "message": "CM to CH",
+      "range": {
+        "startLine": 713,
+        "startChar": 35,
+        "endLine": 713,
+        "endChar": 45
+      },
+      "revId": "10efe162ec9f54a2104ed6829b6e951dbd4e4dd2",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1af78d9a_5534c5dd",
+        "filename": "envsetup.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1003175
+      },
+      "writtenOn": "2015-01-12T07:51:54Z",
+      "side": 1,
+      "message": "CH",
+      "range": {
+        "startLine": 714,
+        "startChar": 16,
+        "endLine": 714,
+        "endChar": 18
+      },
+      "revId": "10efe162ec9f54a2104ed6829b6e951dbd4e4dd2",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1af78d9a_353139ed",
+        "filename": "envsetup.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1003175
+      },
+      "writtenOn": "2015-01-12T07:51:54Z",
+      "side": 1,
+      "message": "CH",
+      "range": {
+        "startLine": 729,
+        "startChar": 55,
+        "endLine": 729,
+        "endChar": 57
+      },
+      "revId": "10efe162ec9f54a2104ed6829b6e951dbd4e4dd2",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1af78d9a_954d8d75",
+        "filename": "envsetup.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 1683,
+      "author": {
+        "id": 1003175
+      },
+      "writtenOn": "2015-01-12T07:51:54Z",
+      "side": 1,
+      "message": "Should we use our gerrit?",
+      "range": {
+        "startLine": 1667,
+        "startChar": 0,
+        "endLine": 1683,
+        "endChar": 40
+      },
+      "revId": "10efe162ec9f54a2104ed6829b6e951dbd4e4dd2",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1af78d9a_7552a114",
+        "filename": "envsetup.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 1748,
+      "author": {
+        "id": 1003175
+      },
+      "writtenOn": "2015-01-12T07:51:54Z",
+      "side": 1,
+      "message": "CH",
+      "revId": "10efe162ec9f54a2104ed6829b6e951dbd4e4dd2",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1af78d9a_d5571501",
+        "filename": "envsetup.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 1793,
+      "author": {
+        "id": 1003175
+      },
+      "writtenOn": "2015-01-12T07:51:54Z",
+      "side": 1,
+      "message": "ch",
+      "revId": "10efe162ec9f54a2104ed6829b6e951dbd4e4dd2",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
