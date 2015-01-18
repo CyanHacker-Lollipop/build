@@ -43,9 +43,6 @@ EOF
     echo $A
 }
 
-# Hackify before we build, we always want to be optimized!
-export HACKIFY=true
-
 # Get the value of a build variable as an absolute path.
 function get_abs_build_var()
 {
