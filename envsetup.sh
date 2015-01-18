@@ -43,7 +43,6 @@ EOF
     echo $A
 }
 
-
 # Get the value of a build variable as an absolute path.
 function get_abs_build_var()
 {
@@ -2440,3 +2439,4 @@ case "$cchoice" in
 		;;
 esac
 done
+
