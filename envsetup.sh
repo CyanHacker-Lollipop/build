@@ -43,25 +43,6 @@ EOF
     echo $A
 }
 
-# Hackify before we build, we always want to be optimized!
-while read -p "Hackify? y or n " cchoice
-do
-case "$cchoice" in
-	y )
-		export HACKIFY=true
-		break
-		;;
-	n )
-		export HACKIFY=false
-		break
-		;;
-	* )
-		echo "Please answer y or n"
-		break
-		;;
-esac
-done
-
 # Get the value of a build variable as an absolute path.
 function get_abs_build_var()
 {
@@ -2439,3 +2420,23 @@ check_bash_version && {
 }
 
 export ANDROID_BUILD_TOP=$(gettop)
+
+# Hackify before we build, we always want to be optimized!
+while read -p "Hackify? y or n " cchoice
+do
+case "$cchoice" in
+	y )
+		export HACKIFY=true
+		break
+		;;
+	n )
+		export HACKIFY=false
+		break
+		;;
+	* )
+		echo "Please answer y or n"
+		break
+		;;
+esac
+done
+
