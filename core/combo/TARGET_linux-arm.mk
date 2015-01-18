@@ -35,6 +35,9 @@ TARGET_$(combo_2nd_arch_prefix)ARCH_VARIANT := armv5te
 endif
 
 # Decouple NDK library selection with platform compiler version
+ifeq ($(HACKIFY),true)
+$(combo_2nd_arch_prefix)TARGET_NDK_GCC_VERSION := 4.9
+else
 $(combo_2nd_arch_prefix)TARGET_NDK_GCC_VERSION := 4.8
 
 ifeq ($(strip $(TARGET_GCC_VERSION_EXP)),)
@@ -114,7 +117,8 @@ $(combo_2nd_arch_prefix)TARGET_GLOBAL_CFLAGS += \
 # disable "-Wunused-but-set-variable" here.
 ifneq ($(filter 4.6 4.6.% 4.7 4.7.% 4.8, $($(combo_2nd_arch_prefix)TARGET_GCC_VERSION)),)
 $(combo_2nd_arch_prefix)TARGET_GLOBAL_CFLAGS += -fno-builtin-sin \
-			-fno-strict-volatile-bitfields
+			-fno-strict-volatile-bitfields\
+			-fstrict-aliasing
 endif
 
 # This is to avoid the dreaded warning compiler message:

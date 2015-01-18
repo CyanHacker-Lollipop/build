@@ -64,7 +64,7 @@ endif # CALLED_FROM_SETUP
 
 ifneq ($(PRINT_BUILD_CONFIG),)
 HOST_OS_EXTRA:=$(shell python -c "import platform; print(platform.platform())")
-$(info ============================================)
+$(info =================BUILD INFO=================)
 $(info   PLATFORM_VERSION=$(PLATFORM_VERSION))
 $(info   CH_VERSION=$(CH_VERSION))
 $(info   TARGET_PRODUCT=$(TARGET_PRODUCT))
@@ -78,5 +78,29 @@ $(info   HOST_OS=$(HOST_OS))
 $(info   HOST_OS_EXTRA=$(HOST_OS_EXTRA))
 $(info   BUILD_ID=$(BUILD_ID))
 $(info   OUT_DIR=$(OUT_DIR))
+$(info ===============OPTIMIZATIONS================)
+ifeq ($(HACKIFY),true)
+  ifndef LOCAL_IS_HOST_MODULE
+   ifeq ($(LOCAL_CLANG),)
+	$(info   O3=true)
+	$(info   GRAPHITE=true)
+	$(info   GCC_OPTIs=true)
+   else
+	$(info   O3=false)
+	$(info   GRAPHITE=false)
+	$(info   GCC_OPTIs=false)
+   ifeq ($($(TARGET_CPU_VARIANT))),krait)
+	$(info   KRAIT_OPTIs=true)
+   else 
+	$(info   KRAIT_OPTIs=false)
+   endif
+   endif
+  else
+	$(info   O3=false)
+	$(info   GRAPHITE=false)
+	$(info   GCC_OPTIs=false)
+	$(info   KRAIT_OPTIs=false)
+  endif
+endif
 $(info ============================================)
 endif
