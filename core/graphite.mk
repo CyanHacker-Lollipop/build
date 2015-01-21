@@ -1,4 +1,4 @@
-# Copyright (C) 2014 The SaberMod Project
+# Copyright (C) 2015 The SaberMod Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,18 +12,66 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+# Force disable some modules that are not compatible with graphite flags
+LOCAL_DISABLE_GRAPHITE := \
+	libunwind \
+	libFFTEm \
+	libicui18n \
+	libskia \
+	libvpx \
+	libmedia_jni \
+	libstagefright_mp3dec \
+	libart \
+	libstagefright_amrwbenc \
+	libpdfium \
+	libpdfiumcore \
+	libwebviewchromium \
+	libwebviewchromium_loader \
+	libwebviewchromium_plat_support \
+	libjni_filtershow_filters \
+	fio
 
-GRAPHITE_FLAGS := -fgraphite,-floop-flatten,-floop-parallelize-all,-ftree-loop-linear,-floop-interchange,-floop-strip-mine,-floop-block
-
-ifdef LOCAL_CFLAGS
-LOCAL_CFLAGS += $(call cc-option,$(GRAPHITE_FLAGS))
+ifneq (1,$(words $(filter $(LOCAL_DISABLE_GRAPHITE), $(LOCAL_MODULE))))
+ifdef LOCAL_CONLYFLAGS
+LOCAL_CONLYFLAGS += \
+	-fgraphite \
+	-floop-flatten \
+	-floop-parallelize-all \
+	-ftree-loop-linear \
+	-floop-interchange \
+	-floop-strip-mine \
+	-floop-block
 else
-LOCAL_CFLAGS := $(call cc-option,$(GRAPHITE_FLAGS))
+LOCAL_CONLYFLAGS := \
+	-fgraphite \
+	-floop-flatten \
+	-floop-parallelize-all \
+	-ftree-loop-linear \
+	-floop-interchange \
+	-floop-strip-mine \
+	-floop-block
 endif
 
 ifdef LOCAL_CPPFLAGS
-LOCAL_CFLAGS += $(call cpp-option,$(GRAPHITE_FLAGS))
+LOCAL_CPPFLAGS += \
+	-fgraphite \
+	-floop-flatten \
+	-floop-parallelize-all \
+	-ftree-loop-linear \
+	-floop-interchange \
+	-floop-strip-mine \
+	-floop-block
 else
-LOCAL_CPPFLAGS := $(call cpp-option,$(GRAPHITE_FLAGS))
+LOCAL_CPPFLAGS := \
+	-fgraphite \
+	-floop-flatten \
+	-floop-parallelize-all \
+	-ftree-loop-linear \
+	-floop-interchange \
+	-floop-strip-mine \
+	-floop-block
 endif
-####
+endif
+
+#####
+

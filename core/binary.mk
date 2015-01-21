@@ -97,8 +97,19 @@ else
   endif
 endif
 
+# Include custom gcc flags. Seperate them so they can be easily managed.
 ifeq ($(HACKIFY),true)
-include $(BUILD_SYSTEM)/graphite.mk
+  include $(BUILD_SYSTEM)/strict.mk
+  ifndef LOCAL_IS_HOST_MODULE
+   ifeq ($(LOCAL_CLANG),)
+     include $(BUILD_SYSTEM)/O3.mk
+     include $(BUILD_SYSTEM)/gcconly.mk
+     include $(BUILD_SYSTEM)/graphite.mk
+   ifeq ($($(TARGET_CPU_VARIANT))),krait)
+     include $(BUILD_SYSTEM)/krait.mk
+   endif
+   endif
+  endif
 endif
 
 # The following LOCAL_ variables will be modified in this file.
