@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a1969be_04d787c0",
+        "filename": "core/clang/HOST_x86_common.mk",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003174
+      },
+      "writtenOn": "2015-02-21T12:04:00Z",
+      "side": 1,
+      "message": "shouldnt this be ifneq?",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 4
+      },
+      "revId": "cd5d40e811d10a3fe6ffd3eea90db44eff434825",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
