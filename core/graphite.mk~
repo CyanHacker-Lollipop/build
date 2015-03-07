@@ -37,7 +37,6 @@ LOCAL_DISABLE_GRAPHITE := \
 	mdnsd \
 	libwebrtc_spl \
 	libmincrypt \
-	libhost \
 	third_party_WebKit_Source_core_webcore_svg_gyp
 
 ifneq (1,$(words $(filter $(LOCAL_DISABLE_GRAPHITE),$(LOCAL_MODULE))))
