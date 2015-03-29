@@ -32,20 +32,21 @@ endif
 # Clang flags for all host or target rules
 CLANG_CONFIG_EXTRA_ASFLAGS :=
 CLANG_CONFIG_EXTRA_CFLAGS :=
-ifeq ($(HACKIFY),true)
-CLANG_CONFIG_EXTRA_CPPFLAGS := -O3 -Qunused-arguments -Wno-unknown-warning-option -D__compiler_offsetof=__builtin_offsetof
-else
 CLANG_CONFIG_EXTRA_CPPFLAGS :=
-endif
 CLANG_CONFIG_EXTRA_LDFLAGS :=
 
-ifeq ($(HACKIFY),true)
-CLANG_CONFIG_EXTRA_CFLAGS += \
-  -O3 -Qunused-arguments -Wno-unknown-warning-option -D__compiler_offsetof=__builtin_offsetof
-else
+ifeq ($(strip $(ARCHIDROID_OPTIMIZATIONS)),true)
+# ArchiDroid
+include $(BUILD_SYSTEM)/archidroid.mk
+CLANG_CONFIG_EXTRA_CFLAGS += $(ARCHIDROID_CLANG_CFLAGS)
+CLANG_CONFIG_EXTRA_CPPFLAGS += $(ARCHIDROID_CLANG_CPPFLAGS)
+CLANG_CONFIG_EXTRA_LDFLAGS += $(ARCHIDROID_CLANG_LDFLAGS)
+endif
+
+
 CLANG_CONFIG_EXTRA_CFLAGS += \
   -D__compiler_offsetof=__builtin_offsetof
-endif
+
 # Help catch common 32/64-bit errors.
 CLANG_CONFIG_EXTRA_CFLAGS += \
   -Werror=int-conversion
@@ -55,6 +56,20 @@ CLANG_CONFIG_EXTRA_CFLAGS += \
 CLANG_CONFIG_EXTRA_CFLAGS += \
   -Wno-unused-command-line-argument
 
+ifeq ($(strip $(ARCHIDROID_OPTIMIZATIONS)),true)
+CLANG_CONFIG_UNKNOWN_CFLAGS := \
+  $(ARCHIDROID_CLANG_UNKNOWN_FLAGS) \
+  -funswitch-loops \
+  -fno-tree-sra \
+  -finline-limit=64 \
+  -Wno-psabi \
+  -Wno-unused-but-set-variable \
+  -Wno-unused-but-set-parameter \
+  -Wmaybe-uninitialized \
+  -Wno-maybe-uninitialized \
+  -Wno-error=maybe-uninitialized \
+  -fno-canonical-system-headers
+else
 CLANG_CONFIG_UNKNOWN_CFLAGS := \
   -funswitch-loops \
   -fno-tree-sra \
@@ -66,6 +81,7 @@ CLANG_CONFIG_UNKNOWN_CFLAGS := \
   -Wno-maybe-uninitialized \
   -Wno-error=maybe-uninitialized \
   -fno-canonical-system-headers
+endif
 
 # Clang flags for all host rules
 CLANG_CONFIG_HOST_EXTRA_ASFLAGS :=

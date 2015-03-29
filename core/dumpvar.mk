@@ -69,14 +69,56 @@ $(info   PLATFORM_VERSION=$(PLATFORM_VERSION))
 $(info   CH_VERSION=$(CH_VERSION))
 $(info   TARGET_PRODUCT=$(TARGET_PRODUCT))
 $(info   TARGET_BUILD_VARIANT=$(TARGET_BUILD_VARIANT))
-$(info   TARGET_BUILD_TYPE=$(TARGET_BUILD_TYPE))
 $(info   TARGET_ARCH=$(TARGET_ARCH))
 $(info   TARGET_ARCH_VARIANT=$(TARGET_ARCH_VARIANT))
 $(info   TARGET_CPU_VARIANT=$(TARGET_CPU_VARIANT))
+$(info   TARGET_GCC_AND_VERSION=$(TARGET_GCC_VERSION))
+ifdef TARGET_GCC_ARM
+$(info   TARGET_GCC_ARM_VERSION=$(TARGET_GCC_ARM))
+else
+$(info   TARGET_GCC_ARM_VERSION=Default)
+endif
+ifdef TARGET_LIB_VERSION
+$(info   TARGET_LIB_VERSION=$(TARGET_LIB_VERSION))
+else
+$(info   TARGET_LIB_VERSION=Default)
+endif
+ifeq ($(strip $(USE_LEGACY_GCC)),true)
+$(info   LEGACY_GCC=true)
+else
+$(info   LEGACY_GCC=false)
+endif
 $(info   HOST_ARCH=$(HOST_ARCH))
 $(info   HOST_OS=$(HOST_OS))
 $(info   HOST_OS_EXTRA=$(HOST_OS_EXTRA))
 $(info   BUILD_ID=$(BUILD_ID))
 $(info   OUT_DIR=$(OUT_DIR))
+$(info ============================================)
+$(info ================OPTIMIZATIONS===============)
+ifeq ($(strip $(USE_OPTIMIZATIONS)),true)
+$(info   OPTIMIZATIONS=true)
+else
+$(info   OPTIMIZATIONS=false)
+endif
+ifeq ($(strip $(O3_OPTIMIZATIONS)),true)
+$(info   O3=true)
+else
+$(info   O3=false)
+endif
+ifeq ($(strip $(GRAPHITE)),true)
+$(info   Graphite=true)
+else
+$(info   Graphite=false)
+endif
+ifeq ($(strip $(ENABLE_PTHREAD)),true)
+$(info   Pthread=true)
+else
+$(info   Pthread=false)
+endif
+ifeq ($(strip $(ARCHIDROID_OPTIMIZATIONS)),true)
+$(info   ArchiDroid=true)
+else
+$(info   ArchiDroid=false)
+endif
 $(info ============================================)
 endif
