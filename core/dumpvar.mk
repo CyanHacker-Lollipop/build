@@ -100,6 +100,11 @@ $(info   OPTIMIZATIONS=true)
 else
 $(info   OPTIMIZATIONS=false)
 endif
+ifeq ($(strip $(USE_KERNEL_OPTIMIZATIONS)),true)
+$(info   KERNEL OPTIMIZATIONS=true)
+else
+$(info   KERNEL OPTIMIZATIONS=false)
+endif
 ifeq ($(strip $(O3_OPTIMIZATIONS)),true)
 $(info   O3=true)
 else
