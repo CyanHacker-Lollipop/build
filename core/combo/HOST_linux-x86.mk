@@ -39,11 +39,7 @@ $(combo_2nd_arch_prefix)HOST_TOOLCHAIN_FOR_CLANG := prebuilts/gcc/linux-x86/host
 endif
 
 # We expect SSE3 floating point math.
-ifeq ($(strip $(ARCHIDROID_OPTIMIZATIONS)),true)
 $(combo_2nd_arch_prefix)HOST_GLOBAL_CFLAGS += -mstackrealign -msse3 -mfpmath=sse -m32 -Wa,--noexecstack -march=native
-else
-$(combo_2nd_arch_prefix)HOST_GLOBAL_CFLAGS += -mstackrealign -msse3 -mfpmath=sse -m32 -Wa,--noexecstack -march=prescott
-endif
 $(combo_2nd_arch_prefix)HOST_GLOBAL_LDFLAGS += -m32 -Wl,-z,noexecstack
 
 ifneq ($(strip $(BUILD_HOST_static)),)
