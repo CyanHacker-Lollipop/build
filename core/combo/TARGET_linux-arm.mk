@@ -38,17 +38,9 @@ endif
 $(combo_2nd_arch_prefix)TARGET_NDK_GCC_VERSION := 4.8
 
 ifeq ($(strip $(TARGET_GCC_VERSION_EXP)),)
-  ifdef TARGET_GCC_AND
   $(combo_2nd_arch_prefix)TARGET_GCC_VERSION := $(TARGET_GCC_AND)
-  else
-  $(warning ********************************************************************************)
-  $(warning *  TARGET_GCC_AND not defined.)
-  $(warning *  Defaulting to gcc 4.8 for ROM.)
-  $(warning ********************************************************************************)
-  $(combo_2nd_arch_prefix)TARGET_GCC_VERSION := 4.8
-  endif
 else
-$(combo_2nd_arch_prefix)TARGET_GCC_VERSION := $(TARGET_GCC_VERSION_EXP)
+  $(combo_2nd_arch_prefix)TARGET_GCC_VERSION := $(TARGET_GCC_VERSION_EXP)
 endif
 
 TARGET_ARCH_SPECIFIC_MAKEFILE := $(BUILD_COMBOS)/arch/$(TARGET_$(combo_2nd_arch_prefix)ARCH)/$(TARGET_$(combo_2nd_arch_prefix)ARCH_VARIANT).mk

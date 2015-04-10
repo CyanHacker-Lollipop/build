@@ -70,6 +70,7 @@ $(info   CH_VERSION=$(CH_VERSION))
 $(info   TARGET_PRODUCT=$(TARGET_PRODUCT))
 $(info   TARGET_BUILD_VARIANT=$(TARGET_BUILD_VARIANT))
 $(info   TARGET_ARCH=$(TARGET_ARCH))
+$(info   TARGET_ARCH_2=$(TARGET_ARCH_2))
 $(info   TARGET_ARCH_VARIANT=$(TARGET_ARCH_VARIANT))
 $(info   TARGET_CPU_VARIANT=$(TARGET_CPU_VARIANT))
 $(info   TARGET_GCC_AND_VERSION=$(TARGET_GCC_VERSION))
@@ -121,4 +122,9 @@ else
 $(info   ArchiDroid=false)
 endif
 $(info ============================================)
+
+ifneq ($(strip $(TARGET_ARCH)),$(strip $(TARGET_ARCH_2)))
+$(error "TARGET_ARCH_2 set in sm.mk does not match your devices TARGET_ARCH")
+endif
+
 endif
