@@ -38,11 +38,7 @@ else
 HOST_TOOLCHAIN_FOR_CLANG := prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.11-4.6/
 endif
 
-ifeq ($(strip $(ARCHIDROID_OPTIMIZATIONS)),true)
 HOST_GLOBAL_CFLAGS += -m64 -march=native -Wa,--noexecstack
-else
-HOST_GLOBAL_CFLAGS += -m64 -Wa,--noexecstack
-endif
 HOST_GLOBAL_LDFLAGS += -m64 -Wl,-z,noexecstack
 
 ifneq ($(strip $(BUILD_HOST_static)),)
