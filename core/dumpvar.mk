@@ -73,6 +73,7 @@ $(info   TARGET_ARCH=$(TARGET_ARCH))
 $(info   TARGET_ARCH_VARIANT=$(TARGET_ARCH_VARIANT))
 $(info   TARGET_CPU_VARIANT=$(TARGET_CPU_VARIANT))
 $(info   TARGET_GCC_AND_VERSION=$(TARGET_GCC_VERSION))
+$(info   TARGET_NDK_VERSION=$(TARGET_NDK_GCC_VERSION))
 ifdef TARGET_GCC_ARM
 $(info   TARGET_GCC_ARM_VERSION=$(TARGET_GCC_ARM))
 else
@@ -114,11 +115,6 @@ ifeq ($(strip $(ENABLE_PTHREAD)),true)
 $(info   Pthread=true)
 else
 $(info   Pthread=false)
-endif
-ifeq ($(strip $(ARCHIDROID_OPTIMIZATIONS)),true)
-$(info   ArchiDroid=true)
-else
-$(info   ArchiDroid=false)
 endif
 $(info ============================================)
 endif
