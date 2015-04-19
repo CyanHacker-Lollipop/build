@@ -119,8 +119,10 @@ $(info   Pthread=false)
 endif
 $(info ============================================)
 
+ifeq ($(strip $(USE_OPTIMIZATIONS)),true)
 ifneq ($(strip $(TARGET_ARCH)),$(strip $(TARGET_ARCH_2)))
 $(error "TARGET_ARCH_2 set in sm.mk does not match your devices TARGET_ARCH")
+endif
 endif
 
 endif

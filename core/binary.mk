@@ -114,14 +114,14 @@ ifneq ($(strip $(USE_OPTIMIZATIONS)),false)
 # limitations under the License.
 ##########################################################################
 
-# arm thumb, not used on the host compiler.
-ifneq ($(strip $(LOCAL_IS_HOST_MODULE)),true)
-  include $(BUILD_SYSTEM)/thumb_interwork.mk
-endif
-
 # O3
 ifeq ($(strip $(O3_OPTIMIZATIONS)),true)
   include $(BUILD_SYSTEM)/O3.mk
+endif
+
+ifeq($(strip $(USE_EXTRA_OPTIMZATIONS)),true)
+# Extra sabermod variables
+include $(BUILD_SYSTEM)/extra.mk
 endif
 
 # posix thread (pthread) support
@@ -130,11 +130,13 @@ ifeq ($(strip $(ENABLE_PTHREAD)),true)
 endif
 
 # Do not use graphite on host modules or the clang compiler.
-ifneq ($(strip $(LOCAL_IS_HOST_MODULE)),true)
-  ifneq ($(strip $(LOCAL_CLANG)),true)
-
-    # If it gets this far enable graphite by default from here on out.
-    include $(BUILD_SYSTEM)/graphite.mk
+# Also do not bother using on darwin.
+ifeq ($(HOST_OS),linux)
+  ifneq ($(strip $(LOCAL_IS_HOST_MODULE)),true)
+    ifneq ($(strip $(LOCAL_CLANG)),true)
+      # If it gets this far enable graphite by default from here on out.
+      include $(BUILD_SYSTEM)/graphite.mk
+    endif
   endif
 endif
 
@@ -143,11 +145,13 @@ endif
 # See vendor or device trees for more info.  Add more sections below and to vendor/name/configs/sm.mk if need be.
 
 # modules that need -Wno-error=maybe-uninitialized
-ifeq (1,$(words $(filter $(MAYBE_UNINITIALIZED),$(LOCAL_MODULE))))
-  ifdef LOCAL_CFLAGS
-    LOCAL_CFLAGS += -Wno-error=maybe-uninitialized
-  else
-    LOCAL_CFLAGS := -Wno-error=maybe-uninitialized
+ifdef MAYBE_UNINITIALIZED
+  ifeq (1,$(words $(filter $(MAYBE_UNINITIALIZED),$(LOCAL_MODULE))))
+    ifdef LOCAL_CFLAGS
+      LOCAL_CFLAGS += -Wno-error=maybe-uninitialized
+    else
+      LOCAL_CFLAGS := -Wno-error=maybe-uninitialized
+    endif
   endif
 endif
 
