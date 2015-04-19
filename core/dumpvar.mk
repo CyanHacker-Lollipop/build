@@ -102,6 +102,11 @@ $(info   KERNEL OPTIMIZATIONS=true)
 else
 $(info   KERNEL OPTIMIZATIONS=false)
 endif
+ifeq ($(strip $(USE_EXTRA_OPTIMIZATIONS)),true)
+$(info   EXTRA OPTIMIZATIONS=true)
+else
+$(info   EXTRA OPTIMIZATIONS=false)
+endif
 ifeq ($(strip $(O3_OPTIMIZATIONS)),true)
 $(info   O3=true)
 else
@@ -119,8 +124,10 @@ $(info   Pthread=false)
 endif
 $(info ============================================)
 
+ifeq ($(strip $(USE_OPTIMIZATIONS)),true)
 ifneq ($(strip $(TARGET_ARCH)),$(strip $(TARGET_ARCH_2)))
 $(error "TARGET_ARCH_2 set in sm.mk does not match your devices TARGET_ARCH")
+endif
 endif
 
 endif
