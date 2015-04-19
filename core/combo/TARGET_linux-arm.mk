@@ -38,10 +38,6 @@ endif
 ifdef TARGET_NDK_VERSION
 $(combo_2nd_arch_prefix)TARGET_NDK_GCC_VERSION := $(TARGET_NDK_VERSION)
 else
-  $(warning ********************************************************************************)
-  $(warning *  TARGET_NDK_VERSION not defined.)
-  $(warning *  Defaulting to 4.8 .)
-  $(warning ********************************************************************************)
 $(combo_2nd_arch_prefix)TARGET_NDK_GCC_VERSION := 4.8
 endif
 
@@ -75,17 +71,21 @@ $(combo_2nd_arch_prefix)TARGET_STRIP := $($(combo_2nd_arch_prefix)TARGET_TOOLS_P
 
 $(combo_2nd_arch_prefix)TARGET_NO_UNDEFINED_LDFLAGS := -Wl,--no-undefined
 
-$(combo_2nd_arch_prefix)TARGET_arm_CFLAGS :=  -O2 \
-                        -fomit-frame-pointer \
-                        -fstrict-aliasing    \
-                        -funswitch-loops
+$(combo_2nd_arch_prefix)TARGET_arm_CFLAGS :=  -fomit-frame-pointer 
+
+ifneq ($(strip $(O3_OPTIMIZATIONS)),true)
+  $(combo_2nd_arch_prefix)TARGET_arm_CFLAGS += -O2 -g
+endif
+
+ifeq ($(strip $(ENABLE_STRICT_ALIASING)),true)
+  $(combo_2nd_arch_prefix)TARGET_arm_CFLAGS += -fstrict-aliasing
+endif
 
 # Modules can choose to compile some source as thumb.
 $(combo_2nd_arch_prefix)TARGET_thumb_CFLAGS :=  -mthumb \
                         -Os \
                         -fomit-frame-pointer \
                         -fno-strict-aliasing
-
 
 # Set FORCE_ARM_DEBUGGING to "true" in your buildspec.mk
 # or in your environment to force a full arm build, even for
@@ -123,10 +123,8 @@ $(combo_2nd_arch_prefix)TARGET_GLOBAL_CFLAGS += \
 # "-Wall -Werror" due to a commom idiom "ALOGV(mesg)" where ALOGV is turned
 # into no-op in some builds while mesg is defined earlier. So we explicitly
 # disable "-Wunused-but-set-variable" here.
-   ifneq ($(filter 4.6 4.6.% 4.7 4.7.% 4.8, $($(combo_2nd_arch_prefix)TARGET_GCC_VERSION)),)
    $(combo_2nd_arch_prefix)TARGET_GLOBAL_CFLAGS += -fno-builtin-sin \
 			-fno-strict-volatile-bitfields
-   endif
 
 
 
@@ -149,17 +147,17 @@ $(combo_2nd_arch_prefix)TARGET_GLOBAL_LDFLAGS += \
 			-Wl,--icf=safe \
 			$(arch_variant_ldflags)
 
-$(combo_2nd_arch_prefix)TARGET_GLOBAL_CFLAGS += -mthumb-interwork
-
 $(combo_2nd_arch_prefix)TARGET_GLOBAL_CPPFLAGS += -fvisibility-inlines-hidden
 
 # More flags/options can be added here
 $(combo_2nd_arch_prefix)TARGET_RELEASE_CFLAGS := \
 			-DNDEBUG \
-			-Wstrict-aliasing=2 \
 			-fgcse-after-reload \
-			-frerun-cse-after-loop \
 			-frename-registers
+
+ifneq ($(strip $(O3_OPTIMIZATIONS)),true)
+  TARGET_RELEASE_CFLAGS += -O2 -g
+endif
 
 libc_root := bionic/libc
 libm_root := bionic/libm
